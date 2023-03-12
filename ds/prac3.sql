@@ -2,6 +2,8 @@ DROP TABLE clients;
 DROP TYPE investments_table;
 DROP TYPE type_address;
 DROP TYPE type_investment;
+DROP TYPE type_exchange;
+DROP TABLE stocks;
 
 CREATE TYPE type_address AS OBJECT (
     street_no NUMBER(10),
@@ -43,4 +45,15 @@ INSERT INTO clients VALUES (
     )
 );
 
-SELECT c.name, c.address.pin FROM clients c;
+CREATE TYPE type_exchange IS VARRAY(5) OF varchar(10);
+/
+
+CREATE TABLE stocks (
+    company varchar(10),
+    current_price NUMBER(4,2),
+    exchanges_traded type_exchange,
+    last_dividend NUMBER(3,2),
+    earning_per_share NUMBER(4,2)
+);
+
+INSERT INTO stocks VALUES ('BHP', 10.50, type_exchange('Sydney', 'New York'), 1.50, 3.20);
